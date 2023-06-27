@@ -9,4 +9,6 @@ export default class Sxp {
     public static sp5 = 32;
     public static sp6 = 48;
     public static sp7 = 64;
+
+    public static appWidth = 900;
 }
