@@ -23,7 +23,7 @@ const pages = [
   { name: "Resume", route: "/resume" },
 ];
 
-export default function Page(props: { children: JSX.Element }): JSX.Element {
+export default function Page(props: { children: any }): JSX.Element {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -46,7 +46,9 @@ export default function Page(props: { children: JSX.Element }): JSX.Element {
             elevation={1}
             sx={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
               mt: { xs: Sxp.sp0, sm: Sxp.sp3 },
               borderRadius: { xs: 0, sm: 2 },
               minHeight: 500,
@@ -75,7 +77,7 @@ function getAppBar(mobileOpen: boolean, setMobileOpen: Function, navigate: Funct
           <Menu />
         </IconButton>
         <Typography variant="h6" color="inherit" component="div">
-          My Portfolio
+          Josh Jarvis
         </Typography>
         <Box
           sx={{
