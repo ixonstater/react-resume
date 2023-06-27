@@ -1,89 +1,75 @@
 import './App.css';
-import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import { Menu, Inbox, Mail } from '@mui/icons-material';
 import React from 'react';
+import Sxp from './Sxp';
+import theme from './Theme';
+
+const pages = ['Contact', 'Projects', 'Resume']
 
 function App() {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const drawerWidth = 240;
 
+
   return (
-    <div className="App">
-      <Box className="AppContent" sx={{ width: { sm: `calc(100% - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` }, }} >
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }} onClick={() => setMobileOpen(!mobileOpen)}>
-              <Menu />
-            </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
-              My Portfolio
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Box>
+    <ThemeProvider theme={theme}>
 
-      {/* Mobile drawer */}
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={() => setMobileOpen(!mobileOpen)}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-      >
-        {getDrawerContents()}
-      </Drawer>
+      <div className="App">
+        <Box className="AppContent">
+          <AppBar position="static">
+            <Toolbar variant="regular" sx={{ ml: Sxp.sp3 }}>
+              <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2, display: { xs: 'inline-flex', sm: 'none' } }} onClick={() => setMobileOpen(!mobileOpen)}>
+                <Menu />
+              </IconButton>
+              <Typography variant="h6" color="inherit" component="div">
+                My Portfolio
+              </Typography>
+              <Box sx={{
+                display: { xs: 'none', sm: 'block' },
+                ml: Sxp.sp3
+              }}>
+                {pages.map((val) => {
+                  return <Button color="inherit" key={`appbar-button-${val}`} sx={{ ml: Sxp.sp1 }}>
+                    <Typography color="inherit">{val}</Typography>
+                  </Button>
+                })}
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </Box>
 
-      {/* Desktop drawer */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box', width: drawerWidth
-          },
-        }}
-      >
-        {getDrawerContents()}
-      </Drawer >
-
-    </div >
+        {/* Mobile drawer */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={() => setMobileOpen(!mobileOpen)}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {getDrawerContents()}
+        </Drawer>
+      </div >
+    </ThemeProvider>
   );
 }
 
 function getDrawerContents(): JSX.Element {
   return (
-    <div>
-      <Toolbar />
-      <Divider />
+    <Box sx={{ mt: Sxp.sp3 }}>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {pages.map((text, _) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    </Box>
   );
 }
 
