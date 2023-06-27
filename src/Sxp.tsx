@@ -2,6 +2,7 @@
 // I will want to use consistently later on.
 
 export default class Sxp {
+    public static sp0 = 0;
     public static sp1 = 4;
     public static sp2 = 8;
     public static sp3 = 16;
