@@ -26,6 +26,7 @@ const pages = [
 export default function Page(props: { children: any }): JSX.Element {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
+  const appBar = getAppBar(mobileOpen, setMobileOpen, navigate);
 
   return (
     <div>
@@ -41,7 +42,7 @@ export default function Page(props: { children: any }): JSX.Element {
         }}
       >
         <Box className="AppContent" sx={{ maxWidth: Sxp.appWidth, flexGrow: 1 }}>
-          {getAppBar(mobileOpen, setMobileOpen, navigate)}
+          {appBar.bar}
           <Paper
             elevation={1}
             sx={{
@@ -51,7 +52,7 @@ export default function Page(props: { children: any }): JSX.Element {
               alignItems: "center",
               mt: { xs: Sxp.sp0, sm: Sxp.sp3 },
               borderRadius: { xs: 0, sm: 2 },
-              minHeight: 500,
+              minHeight: {xs: `calc(100vh - ${appBar.minHeightMobile}px)`, sm: 500},
             }}
           >
             {props.children}
@@ -63,9 +64,10 @@ export default function Page(props: { children: any }): JSX.Element {
   );
 }
 
-function getAppBar(mobileOpen: boolean, setMobileOpen: Function, navigate: Function): JSX.Element {
-  return (
-    <AppBar position="static" sx={{ borderRadius: { xs: 0, sm: 2 } }}>
+function getAppBar(mobileOpen: boolean, setMobileOpen: Function, navigate: Function): {bar: JSX.Element, minHeightMobile: number} {
+  const appBarMinHeightMobile = 56;
+  return {bar: (
+    <AppBar position="static" sx={{ minHeight: {xs: appBarMinHeightMobile}, borderRadius: { xs: 0, sm: 2 } }}>
       <Toolbar variant="regular" sx={{ ml: Sxp.sp3 }}>
         <IconButton
           edge="start"
@@ -102,7 +104,7 @@ function getAppBar(mobileOpen: boolean, setMobileOpen: Function, navigate: Funct
         </Box>
       </Toolbar>
     </AppBar>
-  );
+  ), minHeightMobile: appBarMinHeightMobile};
 }
 
 function getDrawer(mobileOpen: boolean, setMobileOpen: Function, navigate: Function): JSX.Element {

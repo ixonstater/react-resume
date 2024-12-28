@@ -9,10 +9,10 @@ export function AboutMe(): JSX.Element {
       <Typography
         variant="h5"
         sx={{
-          mt: Sxp.sp4,
+          mt: Sxp.sp5,
           ml: { xs: Sxp.sp0, sm: Sxp.sp7 },
           alignSelf: { xs: "center", sm: "start" },
-          mb: Sxp.sp5,
+          mb: Sxp.sp6,
         }}
       >
         About Me
@@ -29,10 +29,13 @@ export function AboutMe(): JSX.Element {
       >
         <img className="headshot-image" src="assets/josh.jpg"></img>
         <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I'm a software engineer with four years of professional experience.
+          I live in beautiful rural Wisconsin with my wife, two kids and tomato patch. I'm passionate about web and mobile frameworks and large scale
+          cloud applications. I graduated from Utah Valley University in 2017 with a BASc in Software Engineering and immediately entered the
+          workforce as a junior developer for Verisk Analytics.
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; My hobbies include playing the piano, amateur carpentry, video game development and gardening.  I get a lot of satisfaction
+          from using my professional skills to help people in my community.
         </Typography>
       </Box>
     </Page>
