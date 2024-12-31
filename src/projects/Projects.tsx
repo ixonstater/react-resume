@@ -1,7 +1,8 @@
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 import Page from "../components/Page";
 import "./Projects.css";
 import Sxp from "../Sxp";
+import { ProjectsCard } from "../components/ProjectsCard";
+import { Typography } from "@mui/material";
 
 export function Projects(): JSX.Element {
   return (
@@ -17,25 +18,18 @@ export function Projects(): JSX.Element {
       >
         Projects
       </Typography>
-      <Card variant="outlined">
-        <CardContent>
-          <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
-            Word of the Day
-          </Typography>
-          <Typography variant="h5" component="div">
-            blah
-          </Typography>
-          <Typography sx={{ color: "text.secondary", mb: 1.5 }}>adjective</Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
+      <ProjectsCard
+        title={"Labor Tracker"}
+        subtitle={"Track and analyze labor contractions."}
+        body={[
+          "I built this when my wife and I were",
+          "expecting our first child. The application",
+          "uses Angular with a local storage wrapper",
+          "for persistence.",
+        ]}
+        action={() => {}}
+        actionLabel="Try it!"
+      ></ProjectsCard>
       {/* <iframe src="labor-tracker/index.html" className="labor-tracker-frame"></iframe> */}
     </Page>
   );
@@ -48,4 +42,3 @@ export function Projects(): JSX.Element {
 // AES blog post -- ported
 // Dart LC3 vm / assembler
 // Geoquery
-// Labor tracker -- pics
