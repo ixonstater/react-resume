@@ -8,7 +8,7 @@ export function ProjectsCard(props: {
   title: string;
   subtitle: string;
   body: string[];
-  action: Function;
+  action: any;
   actionLabel: string;
   githubLink?: JSX.Element;
 }): JSX.Element {
@@ -18,17 +18,18 @@ export function ProjectsCard(props: {
         <Typography variant="h5" component="div" sx={{ mb: Sxp.sp1 }}>
           {props.title}
         </Typography>
-        <Typography sx={{ color: "text.secondary", mb: Sxp.sp3, ml: Sxp.sp3 }}>{props.subtitle}</Typography>
+        <Typography sx={{ color: "text.secondary", mb: Sxp.sp3, ml: Sxp.sp2 }}>{props.subtitle}</Typography>
         <Typography variant="body2">&nbsp;&nbsp;&nbsp;&nbsp;{joinOnLineBreak(props.body)}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" sx={{ mb: Sxp.sp3, ml: Sxp.sp3 }}>
+        <Button onClick={props.action} size="small" variant="contained" sx={{ mb: Sxp.sp3, ml: Sxp.sp3 }}>
           {props.actionLabel}
         </Button>
         <IconButton sx={{ mb: Sxp.sp3 }}>
           <GithubIcon></GithubIcon>
         </IconButton>
       </CardActions>
+      {props.children}
     </Card>
   );
 }
