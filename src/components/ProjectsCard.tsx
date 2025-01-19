@@ -10,10 +10,10 @@ export function ProjectsCard(props: {
   body: string[];
   action: any;
   actionLabel: string;
-  githubLink?: JSX.Element;
+  githubLink?: string;
 }): JSX.Element {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ minWidth: 330 }}>
       <CardContent>
         <Typography variant="h5" component="div" sx={{ mb: Sxp.sp1 }}>
           {props.title}
@@ -25,7 +25,14 @@ export function ProjectsCard(props: {
         <Button onClick={props.action} size="small" variant="contained" sx={{ mb: Sxp.sp3, ml: Sxp.sp3 }}>
           {props.actionLabel}
         </Button>
-        <IconButton sx={{ mb: Sxp.sp3 }}>
+        <IconButton
+          sx={{ mb: Sxp.sp3 }}
+          onClick={() => {
+            if (props.githubLink) {
+              window.location.href = props.githubLink;
+            }
+          }}
+        >
           <GithubIcon></GithubIcon>
         </IconButton>
       </CardActions>
