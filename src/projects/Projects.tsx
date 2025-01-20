@@ -83,6 +83,18 @@ export function Projects(): JSX.Element {
           actionLabel={"Try it!"}
           githubLink={"https://github.com/ixonstater/item_counter"}
         ></ProjectsCard>
+        <IFrameDialog
+          src={"flower-counter/index.html"}
+          height={700}
+          width={400}
+          backgroundColor={"white"}
+          border={"0"}
+          borderRadius={5}
+          open={projectsState.flowerCounterDemoOpen}
+          handleClose={(): void => {
+            setFlowerCounterDemoOpen(false);
+          }}
+        ></IFrameDialog>
       </Fragment>
     </Page>
   );
