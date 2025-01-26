@@ -100,13 +100,14 @@ export function Projects(): JSX.Element {
   );
 }
 
-// Cheapspeech
-// Flower counter -- demo
+// TODO
+// Cheapspeech -- blog
 // Tower breaker -- pics
 // Tar recognition -- blog
 // AES blog post -- ported
-// Dart LC3 vm / assembler -- code
-// Geoquery
+// Dart LC3 vm / assembler -- blog
+// Geoquery -- blog
 
 // DONE
 // Labor Tracker
+// Flower counter
