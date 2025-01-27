@@ -108,14 +108,14 @@
     </ol>
     <br>
     <h3>Fundamental Mathematics in the AES</h3>
-    <h4>Bitwise Xor</h4>
+    <h4>Bitwise XOR</h4>
     <p class="text-column">
-        Xor is the logic gate that AES uses to apply round keys to pieces of data. Xor works well for this because each
+        XOR is the logic gate that AES uses to apply round keys to pieces of data. XOR works well for this because each
         possible output is distributed
         evenly among the possible inputs. That is, an output of 1 and an output of 0 both have two distinct inputs that
-        can produce them. If an and gate
-        or a normal or gate were used an output of 0 or 1 depending on which was used could be translated directly to
-        the given inputs. An Xor truth
+        can produce them. If an AND gate
+        or an OR gate were used an output of 0 or 1, depending on which was used, could be translated directly to
+        the given inputs. An XOR truth
         table looks like this:
     </p>
     <pre class="code-block">
@@ -126,7 +126,7 @@ A_______B___|___C
 1       1   |   0
     </pre>
     <p class="text-column">
-        A bitwise Xor works by applying the Xor operator across each bit in two corresponding bit sets. For example,
+        A bitwise XOR works by applying the XOR operator across each bit in two corresponding bit sets. For example,
         010101 and 110011
         <br>010101
         <br>110011
@@ -135,12 +135,8 @@ A_______B___|___C
     </p>
     <h4>Galois Fields</h4>
     <p class="text-column">
-        Probably the single most important set of operations in AES encryption are those involving Galois Fields.
-        Evariste Galois, pronounced Galwaa,
-        was a brilliant French mathematician who died very young after being wounded in a duel. His work in finite
-        fields is crucial to the Rijndael
-        cipher and AES. A finite field (also known as a Galois field) is a field that contains a finite (limited /
-        constrained) number of elements. Essentially it is a series of
+        A finite field (also known as a Galois field) is a field that contains a finite number of elements. Essentially
+        it is a series of
         integers starting at 0 and ending at i - 1 where i is the length of the field. The finite field is maintained by
         defining numeric operations eg.
         addition and multiplication such that any operation applied to members of the field will produce another number
@@ -182,10 +178,10 @@ A_______B___|___C
         <br>= x^5 + x + 1.
         <br>Remember, we are adding in Gf(2) which is the prime base of 256 so 1 + 1 = 0; this is the reason that x^3 +
         x^3 results in 0. This is
-        more easily understood in its binary representation 1010 + 101001 where addition is actually a bitwise Xor
-        operation. The Xor trick only works
+        more easily understood in its binary representation 1010 + 101001 where addition is actually a bitwise XOR
+        operation. The XOR trick only works
         for Galois fields of base 2 or having a characteristic of 2. Lucky for us AES uses Galois(256) for its
-        operations so the Xor trick is
+        operations so the XOR trick is
         applicable.
     </p>
     <p class="text-column">
@@ -323,13 +319,10 @@ void _fillSboxWithMultiplicativeInverse() {
     </pre>
     <p class="text-column">
         After filling the Sbox with multiplicative inverses in Gf(256) the next step is to compute the Affine transform
-        for each value. As I was studying
-        AES I would often come across representations of the transform in a matrix notation. I still do
-        not understand this notation, so I will be explaining the transform as it relates directly to an 8 bit integer.
-        The Affine transform can be defined
-        as the sum (calculated as a bitwise Xor) of the original number, four subsequent circular left rotations of the
+        for each value. The Affine transform can be defined
+        as the sum (calculated as a bitwise XOR) of the original number, four subsequent circular left rotations of the
         number, and the vector
-        constant (11000110 in binary, 63 in hexadecimal). To demonstrate more clearly let's examine an example with the
+        constant (01100011 in binary, 63 in hexadecimal). To demonstrate more clearly let's examine an example with the
         number 8d:
     </p>
     <pre class="code-block">
@@ -360,8 +353,8 @@ void _applyAffineTransformToSbox() {
         var s = _sBox[i];
 
         for (var j = 0; j < 4; j++) {
-        s = (s << 1) | (s >> 7);
-        x ^= s;
+            s = (s << 1) | (s >> 7);
+            x ^= s;
         }
 
         x ^= 0x63;
@@ -477,25 +470,25 @@ f0 - 8c a1 89 0d bf e6 42 68 41 99 2d 0f b0 54 bb 16
     <p class="text-column">
         The algorithm for generating each word in a new round key is very simple for words 2, 3 and 4; it requires that
         the corresponding word from the
-        previous round be Xor'ed with the last word created to produce the next word. For example if we are creating
+        previous round be XOR'ed with the last word created to produce the next word. For example if we are creating
         word 2 of the second round key it
-        would be equal to word 1 of the second round key Xor'ed with word 2 of the first round key. This pattern holds
+        would be equal to word 1 of the second round key XOR'ed with word 2 of the first round key. This pattern holds
         true for words 3 and 4 of the round
         key as well.
     </p>
     <p class="text-column">
         Word 1 of each key is more complicated, it still uses the last word created and its corresponding word from the
         previous round, but before the
-        Xor operation is applied an additional function is applied to the last word created. This operation is referred
+        XOR operation is applied an additional function is applied to the last word created. This operation is referred
         to as the schedule_core function
         or as the rcon function (rcon stands for round constant). This function has three steps, first circularly rotate
         the word one byte to the left,
         second apply the Sbox to all four bytes (substitute each byte in the box for its corresponding Sbox byte), third
-        Xor the word with the round
+        XOR the word with the round
         constant. The round constant is a word as well and it begins as {0x01, 0x0, 0x0, 0x0}; however, each time the
         round constant is used it is
         multiplied by 0x02 in Gf(256) after being applied to the word. Once the schedule_core function is run the
-        produced word is then Xor'ed with the
+        produced word is then XOR'ed with the
         first word of the previous round and the resulting word becomes the first word of the current round.
     </p>
     <p class="text-column">
@@ -518,8 +511,8 @@ Four Words Ago = 01 af 4c 7c
 Previous Word = 03 1a 6a d2
 Left Shift Previous Word = 1a 6a d2 03
 Apply Sbox to Word = a2 02 b5 7b
-Xor Word With Rcon = a3 02 b5 7b
-Xor Word With Four Words Ago = a2 ad f9 07
+XOR Word With Rcon = a3 02 b5 7b
+XOR Word With Four Words Ago = a2 ad f9 07
 Result: a2 ad f9 07
 
 Round Constant
@@ -528,12 +521,12 @@ Round Constant
 Key 1 Word 2
 Four Words Ago = 0d 78 e5 ac
 Previous Word = 02 ad f9 07
-Xor Words = af d5 1c ab
+XOR Words = af d5 1c ab
     </pre>
     <p class="text-column">
         The above example demonstrates 1st and 2nd word generation in the Rijndael Key Schedule. For a full key
         expansion example please look
-        <a href="/static_assets/aes_example/example.html">here</a>.
+        <a href="/aes_example/example.html">here</a>.
     </p>
     <h3>Add Round Key</h3>
     <p class="text-column">
@@ -608,9 +601,9 @@ ca 17 f5 6f
     </p>
     <h3>Substitute Bytes</h3>
     <p class="text-column">
-        Once the data has been Xor'ed against the round key each byte is substituted for its Sbox companion. Sbox
+        Once the data has been XOR'ed against the round key each byte is substituted for its Sbox companion. Sbox
         lookups are done by splitting the byte
-        into two nybbles (a nybble denote a collection of four bits). The high nybble determines the row and the low
+        into two nybbles (a nybble denotes a collection of four bits). The high nybble determines the row and the low
         nybble the column. The completed
         Sbox from the Sbox generation section can be used to find these bits. Interestingly, if the Sbox is rearranged
         so that each row is appended to the
@@ -677,7 +670,7 @@ f0 e6 a8 74
 21 c0 80 3d 
 3a ab 25 ee
 
-Remember addition is Xor in Gf(256)
+Remember addition is XOR in Gf(256)
 
 Mix Byte (0, 0)
 (a8 * 2) + (f0 * 3) + (21 * 1) + (3a * 1)
@@ -718,8 +711,8 @@ Bit Block After Mix Columns
         </li>
     </ul>
     <p class="text-column">
-        A full example of AES with our example key and data can be found <a
-            href="/static_assets/aes_example/example.html">here</a> for reference sake. If you have any questions or if
+        A full example of AES with our example key and data can be found <a href="/aes_example/example.html">here</a>
+        for reference sake. If you have any questions or if
         you find any
         issues with my math or explanation of AES please leave me a comment in the comment section below. Thanks for
         reading!

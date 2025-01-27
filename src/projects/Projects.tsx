@@ -96,6 +96,23 @@ export function Projects(): JSX.Element {
           }}
         ></IFrameDialog>
       </Fragment>
+      <Fragment>
+        <ProjectsCard
+          title={"AES Blog Post"}
+          subtitle={"A layman's explanation of AES."}
+          body={[
+            "I wrote this blog post in order to",
+            "learn the AES symmetric key algorithm.",
+            "As part of this project I also built",
+            "a reference implementation of AES",
+            "in the Dart language.",
+          ]}
+          action={() => {
+            window.location.pathname = "/aes_example/blog.html";
+          }}
+          actionLabel={"Read it!"}
+        ></ProjectsCard>
+      </Fragment>
     </Page>
   );
 }
@@ -104,10 +121,10 @@ export function Projects(): JSX.Element {
 // Cheapspeech -- blog
 // Tower breaker -- pics
 // Tar recognition -- blog
-// AES blog post -- ported
 // Dart LC3 vm / assembler -- blog
 // Geoquery -- blog
 
 // DONE
 // Labor Tracker
 // Flower counter
+// AES blog post
