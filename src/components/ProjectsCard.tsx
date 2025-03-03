@@ -13,7 +13,7 @@ export function ProjectsCard(props: {
   githubLink?: string;
 }): JSX.Element {
   return (
-    <Card variant="outlined" sx={{ minWidth: 330 }}>
+    <Card variant="outlined" sx={{ minHeight: 280, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
       <CardContent>
         <Typography variant="h5" component="div" sx={{ mb: Sxp.sp1 }}>
           {props.title}
