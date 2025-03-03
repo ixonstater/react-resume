@@ -74,7 +74,7 @@ export function Projects(): JSX.Element {
           title={"Flower Counter"}
           subtitle={"Count categorized items."}
           body={[
-            "I built this flutter app for my mom when she",
+            "I built this Flutter app for my mom when she",
             "worked at a local nursery. It allows users",
             "to define categories and count items in",
             "these categories.",

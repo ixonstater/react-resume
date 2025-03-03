@@ -17,6 +17,15 @@
         border: black solid 2px;
     }
 
+    .inline-code {
+        font-family: monospace;
+        font-size: 14px;
+        border-radius: 5px;
+        background-color: #ccc;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
     h2 {
         font-size: 28px !important;
     }
@@ -84,30 +93,7 @@
         padded with zeros.
     </p>
     <br>
-    <h3>A Few Notes</h3>
-    <ol>
-        <li class="text-column">
-            I am not a cryptographer, the following information is my understanding of the AES and may be incorrect. I
-            suggest that you check this
-            information against other sources if you are trying to learn about AES beyond simple curiosity.
-        </li>
-        <li class="text-column">
-            This post contains my code implementing AES, the code can also be found <a
-                href="https://github.com/ixonstater/learning_aes">here</a>
-            on my github page. This code should NOT be used for any purpose other than learning / instruction. While the
-            AES has never been cracked,
-            untested implementations are often vulnerable to a group of exploits known as side-channel attacks.
-        </li>
-        <li class="text-column">
-            My implementation of AES does not use a secure cipher mode, instead it uses the "default" AES encryption
-            mode ECB or Electronic Code Book.
-            I will not cover different cipher modes in depth here as they do not affect the base AES algorithm, but you
-            should note that using an
-            insecure cipher mode can also leave your information in a vulnerable state post encryption.
-        </li>
-    </ol>
-    <br>
-    <h3>Fundamental Mathematics in the AES</h3>
+    <h3>Fundamental Mathematics in AES</h3>
     <h4>Bitwise XOR</h4>
     <p class="text-column">
         XOR is the logic gate that AES uses to apply round keys to pieces of data. XOR works well for this because each
@@ -127,11 +113,13 @@ A_______B___|___C
     </pre>
     <p class="text-column">
         A bitwise XOR works by applying the XOR operator across each bit in two corresponding bit sets. For example,
-        010101 and 110011
-        <br>010101
-        <br>110011
-        <br>______
-        <br>100110
+        <span class="inline-code">010101</span> and <span class="inline-code">110011</span>
+    <pre class="code-block">
+010101
+110011
+______
+100110
+    </pre>
     </p>
     <h4>Galois Fields</h4>
     <p class="text-column">
@@ -141,66 +129,99 @@ A_______B___|___C
         defining numeric operations eg.
         addition and multiplication such that any operation applied to members of the field will produce another number
         in the field. For example in
-        Gf(5) (denoting the field {0, 1, 2, 3, 4}), 1 + 2 = 3, but 4 + 1 = 0. This type of operation should be familiar
+        <span class="inline-code">Gf(5)</span> (denoting the field <span class="inline-code">{0, 1, 2, 3, 4}</span>),
+        <span class="inline-code">1
+            + 2 = 3</span>, but <span class="inline-code">1 + 4 = 0</span>. This type
+        of operation should
+        be familiar
         to anyone with experience
-        using the modulus operator. Indeed, for any prime limit eg Gf(3), Gf(19), Gf(13), addition and multiplication
-        can be defined as c = (a + b) % i
-        and c = (a * b) % i where i is the limit of the Galois field.
+        using the modulus operator. Indeed, for any prime limit eg <span class="inline-code">Gf(3) Gf(13) Gf(19)</span>
+        addition and multiplication
+        can be defined as <span class="inline-code">c = (a + b) % i</span>
+        and <span class="inline-code">c = (a * b) % i</span> where <span class="inline-code">i</span> is the limit of
+        the Galois field.
     </p>
     <p class="text-column">
-        Addition and multiplication in prime Galois fields are simple enough, but what about Gf(6) or Gf(8)? As it turns
+        Addition and multiplication in prime Galois fields are simple enough, but what about <span
+            class="inline-code">Gf(6)</span> or <span class="inline-code">Gf(8)</span>? As it turns
         out one of these will work but
-        the other will not; not just any number can be chosen as the limit of a finite field without breaking the
+        the other will not; some numbers cannot be chosen as the limit of a finite field without breaking the
         constraints on arithmetic operations.
-        The number chosen must be either a prime, or a prime power. A prime power is a number of the form p^k where k is
-        an arbitrary exponent and p
-        is an arbitrary prime number. If these constraints are followed a finite / Galois field can be constructed,
+        The number chosen must be either a prime, or a prime power. A prime power is a number of the form <span
+            class="inline-code">p^k</span> where <span class="inline-code">k</span> is
+        an arbitrary exponent and <span class="inline-code">p</span>
+        is an arbitrary prime number. If these constraints are followed a Galois field can be constructed,
         albeit with different rules involving
         multiplication and addition.
     </p>
     <p class="text-column">
         It is helpful to understand the representation of numbers in a base 2 Galois field as polynomials with
-        coefficients in Gf(2). Remember
-        that Gf(2) = {0, 1}, so the possible coefficients in our polynomial are either 0 or 1. This lets us represent
+        coefficients in <span class="inline-code">Gf(2)</span>. Remember
+        that <span class="inline-code">Gf(2) = {0, 1}</span>, so the possible coefficients in our polynomial are
+        <span class="inline-code">{0, 1}</span>. This lets us represent
         any number in any Galois field
-        Gf(2^k) as a polynomial where the coefficient is the binary digit occupying that space. For example 41 =
-        00101001 = 0x^7 + 0x^6 + 1x^5 + 0x^4
-        + 1x^3 + 0x^2 + 0x^1 + 1x^0 = x^5 + x^3 + 1. This representation may seem convoluted, but it is necessary to
-        preform addition and multiplication
-        in a prime power Galois field. Galois operations can be done with any prime base, however base 2 is most popular
-        in computer applications because
-        of the numbers binary nature.
+        <span class="inline-code">Gf(2^k)</span> as a polynomial where the coefficient is the binary digit occupying
+        that space. For example the following are all equivalent:
+    <pre class="code-block">
+41
+
+00101001
+
+0x^7 + 0x^6 + 1x^5 + 0x^4 + 1x^3 + 0x^2 + 0x^1 + 1x^0
+
+x^5 + x^3 + 1
+</pre>
+    This representation may seem convoluted, but it is necessary to preform addition and multiplication
+    in a prime power Galois field.
     </p>
     <p class="text-column">
-        Addition is done by adding two numbers (represented as polynomials) from Gf(p^k) in Gf(p). For example
-        <br>41 + 10 in Gf(256)
-        <br>= (x^5 + x^3 + 1) + (x^3 + x)
-        <br>= x^5 + x + 1.
-        <br>Remember, we are adding in Gf(2) which is the prime base of 256 so 1 + 1 = 0; this is the reason that x^3 +
-        x^3 results in 0. This is
-        more easily understood in its binary representation 1010 + 101001 where addition is actually a bitwise XOR
-        operation. The XOR trick only works
-        for Galois fields of base 2 or having a characteristic of 2. Lucky for us AES uses Galois(256) for its
-        operations so the XOR trick is
+        Addition is done by adding two numbers (represented as polynomials) from <span
+            class="inline-code">Gf(p^k)</span> in <span class="inline-code">Gf(p)</span>. For example
+        <span class="inline-code">41 + 10</span> in <span class="inline-code">Gf(256)</span>
+    </p>
+    <pre class="code-block">
+10 = 1010 = 1x^3 + 0x^2 + 1x^1 + 0x^2 = (x^3 + x)
+
+41 = 101001 = 1x^5 + 0x^4 + 1x^3 + 0x^2 + 0x^1 + 1x^0 = (x^5 + x^3 + 1)
+
+(x^5 + x^3 + 1) + (x^3 + x)
+
+x^5 + x + 1 = 100011 = 35
+</pre>
+    <p class="text-column">
+        Remember, our possible coefficients come from <span class="inline-code">Gf(2)</span> so <span
+            class="inline-code">1 + 1 = 0</span>; this is the
+        reason that <span class="inline-code">x^3 + x^3 = 0</span>.
+        This is more easily understood in its binary representation <span class="inline-code">1010 + 101001</span> where
+        addition is actually a
+        bitwise XOR operation. The XOR trick only works for Galois fields of base 2 or having a characteristic of 2.
+        Lucky for us AES uses <span class="inline-code">Gf(256)</span> for its operations so the XOR trick is
         applicable.
     </p>
     <p class="text-column">
         Multiplication is more complex than addition and is done by standard polynomial multiplication followed by
         modular division via some irreducible polynomial which
         was used define the finite field. Sounds hard right? It's not too bad if taken one step at a time with an
-        example, so, for example: 12 * 7 in Gf(2^8).
-        <br>12 = x^3 + x^2 (see description of number representation as polynomials in Galois fields above)
-        <br>7 = x^2 + x + 1
-        <br>p = (12 * 7)
-        <br>p = (x^3 + x^2) * (x^2 + x + 1)
-        <br>p = (x^5 + x^4 + x^3) + (x^4 + x^3 + x^2).
+        example, so, for example: <span class="inline-code">12 * 7</span> in <span class="inline-code">Gf(2^8)</span>.
+    </p>
+    <pre class="code-block">
+12 = x^3 + x^2
+
+7 = x^2 + x + 1
+
+p = (12 * 7)
+
+p = (x^3 + x^2) * (x^2 + x + 1)
+
+p = (x^5 + x^4 + x^3) + (x^4 + x^3 + x^2).
+</pre>
+    <p class="text-column">
         <br>So far we have just done simple polynomial multiplication; in the next step, consolidating the terms,
-        addition is done like described above, in Gf(2). Therefore
-        our polynomial product
-        <br>p = x^5 + x^2 = 36.
+        addition is done like described above, in <span class="inline-code">Gf(2)</span>. Therefore
+        our polynomial product is <span class="inline-code">p = x^5 + x^2 = 36</span>.
         <br>Since this does not exceed the limit of our our field, 256, the final step of reducing modulo some
         irreducible polynomial is not necessary and our final product is 36. It is worth noting that with the reducing
-        polynomial for AES, applying the
+        polynomial for AES <span class="inline-code">x^8 + x^4 + x^3 + x + 1</span>, applying the
         modulus operation would still result in 36 being the final answer. If you want to see an example involving
         modulo reduction please look
         <a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic">here</a>.
@@ -649,7 +670,7 @@ f0 e6 a8 74
         ordinary matrix multiplication. All
         arithmetic operations take place in the finite field rather than in ordinary integer space. Matrices can only be
         multiplied if their dimensions
-        match some constraints. In order to both match these constraints and to maximize diffusion during this step each
+        are compatible. In order to both match these constraints and to maximize diffusion during this step each
         4x4 block of bytes is multiplied
         by a 4x4 matrix:
     </p>
@@ -712,9 +733,6 @@ Bit Block After Mix Columns
     </ul>
     <p class="text-column">
         A full example of AES with our example key and data can be found <a href="/aes_example/example.html">here</a>
-        for reference sake. If you have any questions or if
-        you find any
-        issues with my math or explanation of AES please leave me a comment in the comment section below. Thanks for
-        reading!
+        for reference sake. Thanks for reading!
     </p>
 </div>
