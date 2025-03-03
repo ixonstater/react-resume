@@ -9,12 +9,14 @@ import { IFrameDialog } from "../components/IFrameDialog";
 type ProjectsState = {
   laborTrackerDemoOpen: boolean;
   flowerCounterDemoOpen: boolean;
+  towerBreakerDemoOpen: boolean;
 };
 
 export function Projects(): JSX.Element {
   const [projectsState, setProjectsState]: [ProjectsState, any] = useState({
     laborTrackerDemoOpen: false,
     flowerCounterDemoOpen: false,
+    towerBreakerDemoOpen: false,
   });
 
   const setLaborTrackerDemoOpen = (open: boolean) => {
@@ -26,6 +28,12 @@ export function Projects(): JSX.Element {
   const setFlowerCounterDemoOpen = (open: boolean) => {
     const newProjectsState = { ...projectsState };
     newProjectsState.flowerCounterDemoOpen = open;
+    setProjectsState(newProjectsState);
+  };
+
+  const setTowerBreakerDemoOpen = (open: boolean) => {
+    const newProjectsState = { ...projectsState };
+    newProjectsState.towerBreakerDemoOpen = open;
     setProjectsState(newProjectsState);
   };
 
@@ -64,6 +72,7 @@ export function Projects(): JSX.Element {
           border={"0"}
           borderRadius={5}
           open={projectsState.laborTrackerDemoOpen}
+          setOpen={setLaborTrackerDemoOpen}
           handleClose={(): void => {
             setLaborTrackerDemoOpen(false);
           }}
@@ -91,6 +100,7 @@ export function Projects(): JSX.Element {
           border={"0"}
           borderRadius={5}
           open={projectsState.flowerCounterDemoOpen}
+          setOpen={setFlowerCounterDemoOpen}
           handleClose={(): void => {
             setFlowerCounterDemoOpen(false);
           }}
@@ -113,13 +123,45 @@ export function Projects(): JSX.Element {
           actionLabel={"Read it!"}
         ></ProjectsCard>
       </Fragment>
+      <Fragment>
+        <ProjectsCard
+          title={"Tower Breaker Game"}
+          subtitle={"An angry-birds style game."}
+          body={[
+            "I built this game as part of an",
+            "experiment with app launching and",
+            "Google advertisement. I learned many",
+            "interesting things about ad space",
+            "bidding and got around 2000 downloads",
+            "before taking it down.",
+          ]}
+          action={() => {
+            setTowerBreakerDemoOpen(true);
+          }}
+          actionLabel={"Try it!"}
+          githubLink="https://gitlab.com/ixonstater/tower-breaker"
+        ></ProjectsCard>
+        <IFrameDialog
+          src={"tower-breaker/index.html"}
+          height={400}
+          width={600}
+          backgroundColor={"white"}
+          border={"0"}
+          borderRadius={5}
+          open={projectsState.towerBreakerDemoOpen}
+          setOpen={setTowerBreakerDemoOpen}
+          handleClose={(): void => {
+            setTowerBreakerDemoOpen(false);
+          }}
+        ></IFrameDialog>
+      </Fragment>
     </Page>
   );
 }
 
 // TODO
 // Cheapspeech -- blog
-// Tower breaker -- pics
+// Tower breaker -- demo
 // Tar recognition -- blog
 // Dart LC3 vm / assembler -- blog
 // Geoquery -- blog

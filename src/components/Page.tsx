@@ -36,7 +36,6 @@ export default function Page(props: { children: any }): JSX.Element {
           borderRadius: 0,
           position: "static",
           minHeight: "100vh",
-          minWidth: "100vw",
           display: "flex",
           justifyContent: "center",
         }}
@@ -52,7 +51,7 @@ export default function Page(props: { children: any }): JSX.Element {
               alignItems: "center",
               mt: { xs: Sxp.sp0, sm: Sxp.sp3 },
               borderRadius: { xs: 0, sm: 2 },
-              minHeight: {xs: `calc(100vh - ${appBar.minHeightMobile}px)`, sm: 500},
+              minHeight: { xs: `calc(100vh - ${appBar.minHeightMobile}px)`, sm: 500 },
             }}
           >
             {props.children}
@@ -64,47 +63,54 @@ export default function Page(props: { children: any }): JSX.Element {
   );
 }
 
-function getAppBar(mobileOpen: boolean, setMobileOpen: Function, navigate: Function): {bar: JSX.Element, minHeightMobile: number} {
+function getAppBar(
+  mobileOpen: boolean,
+  setMobileOpen: Function,
+  navigate: Function
+): { bar: JSX.Element; minHeightMobile: number } {
   const appBarMinHeightMobile = 56;
-  return {bar: (
-    <AppBar position="static" sx={{ minHeight: {xs: appBarMinHeightMobile}, borderRadius: { xs: 0, sm: 2 } }}>
-      <Toolbar variant="regular" sx={{ ml: Sxp.sp3 }}>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2, display: { xs: "inline-flex", sm: "none" } }}
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <Menu />
-        </IconButton>
-        <Typography variant="h6" color="inherit" component="div">
-          Josh Jarvis
-        </Typography>
-        <Box
-          sx={{
-            display: { xs: "none", sm: "block" },
-            ml: Sxp.sp4,
-          }}
-        >
-          {pages.map((page) => {
-            return (
-              <Button
-                color="inherit"
-                key={`appbar-button-${page.route}`}
-                sx={{ ml: Sxp.sp1 }}
-                onClick={() => {
-                  navigate(page.route);
-                }}
-              >
-                <Typography color="inherit">{page.name}</Typography>
-              </Button>
-            );
-          })}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  ), minHeightMobile: appBarMinHeightMobile};
+  return {
+    bar: (
+      <AppBar position="static" sx={{ minHeight: { xs: appBarMinHeightMobile }, borderRadius: { xs: 0, sm: 2 } }}>
+        <Toolbar variant="regular" sx={{ ml: Sxp.sp3 }}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2, display: { xs: "inline-flex", sm: "none" } }}
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" color="inherit" component="div">
+            Josh Jarvis
+          </Typography>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "block" },
+              ml: Sxp.sp4,
+            }}
+          >
+            {pages.map((page) => {
+              return (
+                <Button
+                  color="inherit"
+                  key={`appbar-button-${page.route}`}
+                  sx={{ ml: Sxp.sp1 }}
+                  onClick={() => {
+                    navigate(page.route);
+                  }}
+                >
+                  <Typography color="inherit">{page.name}</Typography>
+                </Button>
+              );
+            })}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    ),
+    minHeightMobile: appBarMinHeightMobile,
+  };
 }
 
 function getDrawer(mobileOpen: boolean, setMobileOpen: Function, navigate: Function): JSX.Element {
