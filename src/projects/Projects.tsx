@@ -127,6 +127,7 @@ export function Projects(): JSX.Element {
                 window.location.pathname = "/aes_example/blog.html";
               }}
               actionLabel={"Read it!"}
+              githubLink="https://github.com/ixonstater/learning_aes"
             ></ProjectsCard>
           </Fragment>
         </Grid>
@@ -135,7 +136,12 @@ export function Projects(): JSX.Element {
             <ProjectsCard
               title={"Tower Breaker Game"}
               subtitle={"An angry-birds style game."}
-              body={["I built this game as part of an", "experiment with Google ad campaigns."]}
+              body={[
+                "I built this game as part of an",
+                "experiment with Google ad campaigns.",
+                "It was downloaded around 2000 times",
+                "before I removed it from the store.",
+              ]}
               action={() => {
                 setTowerBreakerDemoOpen(true);
               }}
@@ -161,15 +167,3 @@ export function Projects(): JSX.Element {
     </Page>
   );
 }
-
-// TODO
-// Cheapspeech -- blog
-// Tar recognition -- blog
-// Dart LC3 vm / assembler -- blog
-// Geoquery -- blog
-
-// DONE
-// Labor Tracker
-// Flower counter
-// AES blog post
-// Tower breaker
