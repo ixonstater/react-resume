@@ -20,7 +20,9 @@ export function Resume(): JSX.Element {
       <ResumeEntry
         start={new Date("01/10/2021")}
         header={"blah"}
-        impactStatement={"statement"}
+        impactStatement={
+          "statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement statement "
+        }
         technologiesUsed={["afds", "fda", "afda", "adfsa"]}
       ></ResumeEntry>
       <ResumeEntry

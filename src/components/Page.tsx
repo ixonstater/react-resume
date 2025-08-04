@@ -40,7 +40,7 @@ export default function Page(props: { children: any }): JSX.Element {
           justifyContent: "center",
         }}
       >
-        <Box className="AppContent" sx={{ maxWidth: Sxp.appWidth, flexGrow: 1 }}>
+        <Box className="AppContent" sx={{ maxWidth: Sxp.appWidth, flexGrow: 1, marginBottom: "20px" }}>
           {appBar.bar}
           <Paper
             elevation={1}
@@ -52,6 +52,7 @@ export default function Page(props: { children: any }): JSX.Element {
               mt: { xs: Sxp.sp0, sm: Sxp.sp3 },
               borderRadius: { xs: 0, sm: 2 },
               minHeight: { xs: `calc(100vh - ${appBar.minHeightMobile}px)`, sm: 500 },
+              paddingBottom: "20px",
             }}
           >
             {props.children}
