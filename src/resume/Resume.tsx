@@ -1,10 +1,24 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Link, Menu, MenuItem, Typography } from "@mui/material";
 import Page from "../components/Page";
 import Sxp from "../Sxp";
 import { ResumeEntry } from "./resume_entry/ResumeEntry";
 import { DownloadIcon } from "../components/icons/DownloadIcon";
+import React from "react";
 
 export function Resume(): JSX.Element {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const linkStyles = {
+    textDecoration: "none",
+  };
+
   return (
     <Page>
       <Box
@@ -21,9 +35,17 @@ export function Resume(): JSX.Element {
         }}
       >
         <Typography variant="h5">Resume</Typography>
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={handleClick}>
           <DownloadIcon></DownloadIcon>
         </IconButton>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <Link href="/assets/resume.pdf" underline="none" color="inherit" download="resume.pdf">
+            <MenuItem onClick={handleClose}>PDF</MenuItem>
+          </Link>
+          <Link href="/assets/resume.docx" underline="none" color="inherit" download="resume.docx">
+            <MenuItem onClick={handleClose}>Word Document</MenuItem>
+          </Link>
+        </Menu>
       </Box>
       <ResumeEntry
         start={new Date("09/01/2022")}
