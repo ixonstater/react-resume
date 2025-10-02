@@ -15,10 +15,6 @@ export function Resume(): JSX.Element {
     setAnchorEl(null);
   };
 
-  const linkStyles = {
-    textDecoration: "none",
-  };
-
   return (
     <Page>
       <Box
