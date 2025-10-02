@@ -1,22 +1,30 @@
-import { Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import Page from "../components/Page";
 import Sxp from "../Sxp";
 import { ResumeEntry } from "./resume_entry/ResumeEntry";
+import { DownloadIcon } from "../components/icons/DownloadIcon";
 
 export function Resume(): JSX.Element {
   return (
     <Page>
-      <Typography
-        variant="h5"
+      <Box
         sx={{
-          mt: Sxp.sp5,
-          ml: { xs: Sxp.sp0, sm: Sxp.sp7 },
-          alignSelf: { xs: "center", sm: "start" },
-          mb: Sxp.sp6,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          pl: Sxp.sp7,
+          pr: Sxp.sp4,
+          py: Sxp.sp4,
+          boxSizing: "border-box",
         }}
       >
-        Resume
-      </Typography>
+        <Typography variant="h5">Resume</Typography>
+        <IconButton onClick={() => {}}>
+          <DownloadIcon></DownloadIcon>
+        </IconButton>
+      </Box>
       <ResumeEntry
         start={new Date("09/01/2022")}
         header={"Verisk"}

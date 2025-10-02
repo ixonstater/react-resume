@@ -1,4 +1,5 @@
 {
-    "editor.formatOnSave": true,
-    "prettier.printWidth": 130
+  "editor.formatOnSave": true,
+  "prettier.printWidth": 130,
+  "cSpell.words": ["Resumé"]
 }

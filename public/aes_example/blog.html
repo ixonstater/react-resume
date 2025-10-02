@@ -233,7 +233,8 @@ p = (x^5 + x^4 + x^3) + (x^4 + x^3 + x^2).
         bytes of total memory space. In addition,
         Galois multiplication in 2^8 (the field size used in AES) can be done very efficiently using a modified version
         of the
-        <a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic">Peasant's Algorithm</a>. Included here is a dart
+        <a href="https://en.wikipedia.org/wiki/Multiplication_algorithm#Russian_peasant_multiplication">Peasant's
+            Algorithm</a>. Included here is a dart
         function which implements that
         algorithm.
     </p>
@@ -243,12 +244,12 @@ int galoisMultiplication(int a, int b) {
     int highBitSet;
     for (var i = 0; i < 8; i++) {
         if ((b & 1) == 1) {
-        p ^= a;
+            p ^= a;
         }
         highBitSet = (a & 0x80);
         a <<= 1;
         if (highBitSet == 0x80) {
-        a ^= 0x1b;
+            a ^= 0x1b;
         }
         b >>= 1;
     }
