@@ -10,6 +10,7 @@ type ProjectsState = {
   laborTrackerDemoOpen: boolean;
   flowerCounterDemoOpen: boolean;
   towerBreakerDemoOpen: boolean;
+  geminiBankingBotDemoOpen: boolean;
 };
 
 export function Projects(): JSX.Element {
@@ -17,6 +18,7 @@ export function Projects(): JSX.Element {
     laborTrackerDemoOpen: false,
     flowerCounterDemoOpen: false,
     towerBreakerDemoOpen: false,
+    geminiBankingBotDemoOpen: false,
   });
 
   const setLaborTrackerDemoOpen = (open: boolean) => {
@@ -34,6 +36,12 @@ export function Projects(): JSX.Element {
   const setTowerBreakerDemoOpen = (open: boolean) => {
     const newProjectsState = { ...projectsState };
     newProjectsState.towerBreakerDemoOpen = open;
+    setProjectsState(newProjectsState);
+  };
+
+  const setGeminiBankingBotDemoOpen = (open: boolean) => {
+    const newProjectsState = { ...projectsState };
+    newProjectsState.geminiBankingBotDemoOpen = open;
     setProjectsState(newProjectsState);
   };
 
@@ -159,6 +167,39 @@ export function Projects(): JSX.Element {
               setOpen={setTowerBreakerDemoOpen}
               handleClose={(): void => {
                 setTowerBreakerDemoOpen(false);
+              }}
+            ></IFrameDialog>
+          </Fragment>
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <Fragment>
+            <ProjectsCard
+              title={"Gemini Integrated Bank Account"}
+              subtitle={"A mock bank account with Gemini integration."}
+              body={[
+                "I wanted to do an LLM application",
+                "project, and a simple banking app",
+                "seemed like a good demo.  This applet",
+                "allows basic functionality through a",
+                "Google Gemini chatbot.",
+              ]}
+              action={() => {
+                setGeminiBankingBotDemoOpen(true);
+              }}
+              actionLabel={"Try it!"}
+              githubLink="https://github.com/ixonstater/gemini-banking-bot"
+            ></ProjectsCard>
+            <IFrameDialog
+              src={"gemini-banking-bot/index.html"}
+              height={750}
+              width={400}
+              backgroundColor={"white"}
+              border={"0"}
+              borderRadius={5}
+              open={projectsState.geminiBankingBotDemoOpen}
+              setOpen={setGeminiBankingBotDemoOpen}
+              handleClose={(): void => {
+                setGeminiBankingBotDemoOpen(false);
               }}
             ></IFrameDialog>
           </Fragment>
