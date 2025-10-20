@@ -40,7 +40,7 @@ export default function Page(props: { children: any }): JSX.Element {
           justifyContent: "center",
         }}
       >
-        <Box className="AppContent" sx={{ maxWidth: Sxp.appWidth, flexGrow: 1, marginBottom: "20px" }}>
+        <Box className="AppContent" sx={{ maxWidth: Sxp.appWidth, flexGrow: 1, marginBottom: { xs: "0px", sm: "20px" } }}>
           {appBar.bar}
           <Paper
             elevation={1}

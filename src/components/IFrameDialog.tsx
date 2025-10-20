@@ -1,7 +1,9 @@
 import { Close } from "@mui/icons-material";
-import { Dialog, IconButton, Slide } from "@mui/material";
+import { Box, Dialog, IconButton, Slide, useMediaQuery } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
+import Sxp from "../Sxp";
+import theme from "../Theme";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -23,9 +25,31 @@ export function IFrameDialog(props: {
   setOpen: Function;
   handleClose: any;
 }): JSX.Element {
+  const iframeMobile = { flexGrow: 1, margin: Sxp.sp2 };
+  const iframeDesktop = { height: props.height, width: props.width };
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
+  let iframeStyles = {
+    backgroundColor: props.backgroundColor,
+    border: props.border,
+    borderRadius: props.borderRadius,
+  };
+
+  if (isMobile) {
+    iframeStyles = { ...iframeStyles, ...iframeMobile };
+  } else {
+    iframeStyles = { ...iframeStyles, ...iframeDesktop };
+  }
+
   return (
     <Dialog fullScreen={true} open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-      <div style={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          alignItems: { xs: "stretch", sm: "center" },
+          flexGrow: { xs: 1, sm: 0 },
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <IconButton
           edge="start"
           color="inherit"
@@ -35,17 +59,8 @@ export function IFrameDialog(props: {
         >
           <Close></Close>
         </IconButton>
-        <iframe
-          src={props.src}
-          style={{
-            height: props.height,
-            width: props.width,
-            backgroundColor: props.backgroundColor,
-            border: props.border,
-            borderRadius: props.borderRadius,
-          }}
-        ></iframe>
-      </div>
+        <iframe src={props.src} style={iframeStyles}></iframe>
+      </Box>
     </Dialog>
   );
 }
